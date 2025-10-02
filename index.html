@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AOJ Professional Services - Chartered Accountants</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-grey: #2c3e50;
+            --secondary-grey: #95a5a6;
+            --light-grey: #ecf0f1;
+            --dark-grey: #34495e;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--primary-grey);
+        }
+        
+        .navbar {
+            background-color: var(--primary-grey) !important;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .navbar-brand {
+            font-weight: bold;
+            font-size: 1.5rem;
+        }
+        
+        .hero-section {
+            background: linear-gradient(135deg, var(--primary-grey) 0%, var(--dark-grey) 100%);
+            color: white;
+            padding: 100px 0;
+            text-align: center;
+        }
+        
+        .hero-section h1 {
+            font-size: 3rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        
+        .hero-section p {
+            font-size: 1.3rem;
+            margin-bottom: 30px;
+        }
+        
+        .section-title {
+            color: var(--primary-grey);
+            font-weight: bold;
+            margin-bottom: 40px;
+            position: relative;
+            padding-bottom: 15px;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background-color: var(--secondary-grey);
+        }
+        
+        .service-card {
+            background: white;
+            border: none;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            height: 100%;
+        }
+        
+        .service-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+        }
+        
+        .service-icon {
+            font-size: 3rem;
+            color: var(--primary-grey);
+            margin-bottom: 20px;
+        }
+        
+        .value-card {
+            background: var(--light-grey);
+            padding: 30px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            border-left: 4px solid var(--primary-grey);
+        }
+        
+        .team-card {
+            background: white;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+        
+        .contact-info {
+            background: var(--primary-grey);
+            color: white;
+            padding: 40px;
+            border-radius: 10px;
+        }
+        
+        .contact-info i {
+            font-size: 1.5rem;
+            margin-right: 15px;
+            color: var(--light-grey);
+        }
+        
+        .btn-custom {
+            background-color: var(--secondary-grey);
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+        
+        .btn-custom:hover {
+            background-color: var(--primary-grey);
+            color: white;
+        }
+        
+        footer {
+            background-color: var(--primary-grey);
+            color: white;
+            padding: 30px 0;
+            margin-top: 50px;
+        }
+        
+        .client-list {
+            background: var(--light-grey);
+            padding: 20px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="#home">AOJ Professional Services</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="#home">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#services">Services</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#team">Our Team</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero-section">
+        <div class="container">
+            <h1>AOJ Professional Services</h1>
+            <p class="lead">Chartered Accountants | Audit, Advisory, Training & Tax Services</p>
+            <p>Providing Excellent Business Services That Add Value To Our Clients</p>
+            <a href="#contact" class="btn btn-custom btn-lg">Get In Touch</a>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-5">
+        <div class="container">
+            <h2 class="text-center section-title">About Us</h2>
+            <div class="row">
+                <div class="col-lg-8 mx-auto">
+                    <p class="lead text-center">AOJ Professional Services (Chartered Accountants) is a medium size audit, advisory, training and tax services firm established to help businesses create value for their customers. The emphasis of our work is on practical solutions to enhance business success.</p>
+                    <p class="text-center">We offer assurance and related consulting services, bookkeeping and accountancy, strategic business and investment consultancy, Information Technology and Security Services, In-Business Courses, In-House Training and One-to-One Executive Coaching.</p>
+                    <p class="text-center">The firm started financial training and consulting operations in February 1998 and was formally renamed AOJ Professional Services in 2008.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mission & Vision -->
+    <section class="py-5 bg-light">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h3 class="mb-4"><i class="fas fa-bullseye me-2"></i>Our Vision & Mission</h3>
+                    <p class="fw-bold">It is our VISION to emerge among top three Small and Medium-Sized Audit Practitioners in Nigeria by "PROVIDING EXCELLENT BUSINESS SERVICES THAT ADD VALUE TO OUR CLIENTS"</p>
+                    <p>We provide the most reliable and responsible business support services to our clients and are committed partners towards their growth and continuing success.</p>
+                    <ul>
+                        <li>Empower organizations to achieve their potential capabilities and performance</li>
+                        <li>Operate responsibly with integrity in delivering our services to uplift our clients</li>
+                        <li>Deliver with passion and purpose in whatever we do</li>
+                    </ul>
+                </div>
+                <div class="col-md-6">
+                    <h3 class="mb-4"><i class="fas fa-gem me-2"></i>Core Values</h3>
+                    <div class="value-card">
+                        <h5><strong>INTEGRITY</strong></h5>
+                        <p>We put high importance on personal and corporate integrity.</p>
+                    </div>
+                    <div class="value-card">
+                        <h5><strong>EXCELLENCE</strong></h5>
+                        <p>We have a culture of continuously striving for excellence & for the best in everything we do.</p>
+                    </div>
+                    <div class="value-card">
+                        <h5><strong>CONNECTING</strong></h5>
+                        <p>We are constantly connecting with ourselves, with other people, businesses and treating our colleagues and clients with utmost respect.</p>
+                    </div>
+                    <div class="value-card">
+                        <h5><strong>WIN-WIN</strong></h5>
+                        <p>We are committed to a lifelong principle of mutual benefit, supporting each other's growth in creating win-win for all.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="py-5">
+        <div class="container">
+            <h2 class="text-center section-title">Our Services</h2>
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="card service-card p-4 text-center">
+                        <i class="fas fa-clipboard-check service-icon"></i>
+                        <h5>Audit & Assurance</h5>
+                        <p>Comprehensive audit and bookkeeping services, corporate governance audit, and internal audit quality review.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card service-card p-4 text-center">
+                        <i class="fas fa-calculator service-icon"></i>
+                        <h5>Tax Consultancy</h5>
+                        <p>Expert tax consulting services to ensure compliance and optimize your tax position.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card service-card p-4 text-center">
+                        <i class="fas fa-chart-line service-icon"></i>
+                        <h5>Business Advisory</h5>
+                        <p>Strategic planning, business restructuring, and investment consultancy services.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card service-card p-4 text-center">
+                        <i class="fas fa-users service-icon"></i>
+                        <h5>Training & Development</h5>
+                        <p>Financial and leadership training, team building, and executive coaching programs.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card service-card p-4 text-center">
+                        <i class="fas fa-balance-scale service-icon"></i>
+                        <h5>Board Appraisal</h5>
+                        <p>Comprehensive board appraisal and corporate governance consulting services.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card service-card p-4 text-center">
+                        <i class="fas fa-file-invoice-dollar service-icon"></i>
+                        <h5>Accounting Services</h5>
+                        <p>Staff audit, payroll processing, accounts payable/receivable, and bank reconciliation.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Section -->
+    <section id="team" class="py-5 bg-light">
+        <div class="container">
+            <h2 class="text-center section-title">Our Team</h2>
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="team-card">
+                        <h5 class="fw-bold">Joseph Nosa - Principal Consultant</h5>
+                        <p class="text-muted">Fellow, Institute of Chartered Accountants of Nigeria (FCA)</p>
+                        <p>Joseph has over 25 years of experience in Audit and Financial Consulting Management Development. He is a dynamic, enthusiastic, and energetic facilitator and trainer with a passionate belief that people are the key to success in any organization. He is an alumnus of London Business School and University of Northampton, UK, with extensive experience in banking and public accountancy practice including Risk Management, Corporate Banking, and Internal Audit.</p>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="team-card">
+                        <h5 class="fw-bold">Dr. Abubakar Manga - Consultant</h5>
+                        <p class="text-muted">Doctorate in Accounting</p>
+                        <p>Dr. Manga is an erudite scholar with over 30 years' experience in Banking, Financial Consulting and Management Development. He has Masters and Doctorate Degrees in Accounting and related development areas. Over the years, he has consulted for many organizations in Public Sector Efficiency and Effectiveness, Financial Management and Development Economy.</p>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="team-card">
+                        <h5 class="fw-bold">Fidelis Akaeze - Consultant</h5>
+                        <p class="text-muted">Associate, Institute of Chartered Accountants of Nigeria (ACA)</p>
+                        <p>Fidelis has many years of experience in varied sectors of Nigerian Economy. Prior to becoming a Consultant, he was at various times Chief Internal Auditor of a number of multi-national organizations. He has a solid academic background in Accounting and Management and is a facilitator for various training programmes in policy formulation, systems and change management. Fidelis has passion for delivering value to clients for sustainable business growth.</p>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="team-card">
+                        <h5 class="fw-bold">Ajiboso Oyenike - Consultant</h5>
+                        <p class="text-muted">Technology Research & Financial Management Specialist</p>
+                        <p>Oyenike has a strong academic and working background in Technology Research and Financial Management. She is passionate and proactive in providing solution to clients' needs. Oyenike is a specialist in Business Economic Research and Data Collation.</p>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="team-card">
+                        <h5 class="fw-bold">Olusegun Omoletor - Consultant</h5>
+                        <p class="text-muted">Corporate Governance & HR Specialist</p>
+                        <p>Olusegun has academic and working background in Corporate Governance, Human Resources and Business Performance Research, Ethics and Accounting. He has many years of working experience in NAFDAC, Cooperative Society Integrated Business Ltd and Public Consulting.</p>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="team-card">
+                        <h5 class="fw-bold">Patrick Olashinde Daniels - Associate Consultant</h5>
+                        <p class="text-muted">Certified Fraud Examiner (CFE)</p>
+                        <p>Patrick has academic and working background in Corporate Governance, Research, Ethics and Accounting. As a CFE (Certified Fraud Examiner), he has many years of working experience in various Financial Institutions.</p>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="team-card">
+                        <h5 class="fw-bold">Rafiu Olaoye - Associate Consultant</h5>
+                        <p class="text-muted">Fellow, Institute of Chartered Accountants of Nigeria (FCA)</p>
+                        <p>Rafiu has many years of experience in Audit, Advisory and Financial Training. At various times, he was involved in technical research on International Financial Reporting Standards (IFRS).</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Clients Section -->
+    <section class="py-5">
+        <div class="container">
+            <h2 class="text-center section-title">Our Clients</h2>
+            <div class="client-list">
+                <div class="row">
+                    <div class="col-md-6">
+                        <ul>
+                            <li>Investment One Financial Services Ltd.</li>
+                            <li>Investment One Pension Managers Ltd.</li>
+                            <li>GTB Pension Managers Ltd</li>
+                            <li>Orange One Finance Ltd</li>
+                            <li>Norrenberger Group Ltd</li>
+                            <li>Rali Food and Confectioneries</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                        <ul>
+                            <li>Experior Diagnostics Ltd</li>
+                            <li>Quadrant Advisory Ltd</li>
+                            <li>Jolly Bros Nigeria Ltd.</li>
+                            <li>Yaba College of Technology</li>
+                            <li>Ogun State Polytechnic</li>
+                            <li>National Aids Control Programme</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pledge Section -->
+    <section class="py-5 bg-light">
+        <div class="container">
+            <h2 class="text-center section-title">Our Pledge</h2>
+            <div class="row">
+                <div class="col-lg-10 mx-auto">
+                    <div class="card border-0 shadow-sm p-4">
+                        <p class="lead text-center mb-4">The business is built on the foundation that:</p>
+                        <ul class="list-unstyled">
+                            <li class="mb-3"><i class="fas fa-check-circle text-success me-2"></i>The trust that our clients place on us must never be misplaced</li>
+                            <li class="mb-3"><i class="fas fa-check-circle text-success me-2"></i>We shall always provide the most truthful and accurate information and assessment to our clients, partners or associates</li>
+                            <li class="mb-3"><i class="fas fa-check-circle text-success me-2"></i>We shall never disclose any trade secrets, project scope of works, project results or any other sensitive information disclosed to us by our clients or partners</li>
+                            <li class="mb-3"><i class="fas fa-check-circle text-success me-2"></i>We shall only be involved in businesses or projects that are not harmful to the environment, and responsibly conducted with regard to social, financial and environmental concerns</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-5 bg-light">
+        <div class="container">
+            <h2 class="text-center section-title">Contact Us</h2>
+            <div class="row">
+                <div class="col-md-6 mb-4">
+                    <div class="contact-info">
+                        <h4 class="mb-4">Lagos Office</h4>
+                        <p><i class="fas fa-map-marker-alt"></i>3, Franklin Road, Off Abule-Nla Street<br>Costain, Ebute Metta, Lagos</p>
+                        <p><i class="fas fa-phone"></i>07089997052, 08077435429</p>
+                        <p><i class="fas fa-envelope"></i>aojprofessionals@gmail.com</p>
+                    </div>
+                </div>
+                <div class="col-md-6 mb-4">
+                    <div class="contact-info">
+                        <h4 class="mb-4">Abuja Office</h4>
+                        <p><i class="fas fa-map-marker-alt"></i>OYO HOUSE, Rear Wing, Second Floor<br>Central Business District, Abuja</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="text-center">
+        <div class="container">
+            <p class="mb-0">&copy; 2025 AOJ Professional Services. All Rights Reserved.</p>
+            <p class="mt-2">Chartered Accountants | Audit, Advisory, Training & Tax Services</p>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    // Close mobile menu if open
+                    const navCollapse = document.querySelector('.navbar-collapse');
+                    if (navCollapse.classList.contains('show')) {
+                        navCollapse.classList.remove('show');
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
