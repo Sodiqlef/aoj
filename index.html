@@ -95,7 +95,8 @@
             opacity: 0;
             transition: opacity 1.5s ease-in-out;
             background-size: cover;
-            background-position: center;
+            background-position: center center;
+            background-repeat: no-repeat;
             z-index: 1;
         }
         
@@ -116,18 +117,63 @@
         
         .slide-1 {
             background-image: url('img1.jpg');
+            background-position: center 40%;
         }
         
         .slide-2 {
             background-image: url('img2.png');
+            background-position: center 30%;
         }
         
         .slide-3 {
             background-image: url('img3.jpg');
+            background-position: center 45%;
         }
         
         .slide-4 {
             background-image: url('img4.jpg');
+            background-position: center 35%;
+        }
+        
+        /* Responsive background adjustments */
+        @media (max-width: 768px) {
+            .hero-slide {
+                background-size: cover;
+            }
+            
+            .slide-1 {
+                background-position: center center;
+            }
+            
+            .slide-2 {
+                background-position: center center;
+            }
+            
+            .slide-3 {
+                background-position: center center;
+            }
+            
+            .slide-4 {
+                background-position: center center;
+            }
+        }
+        
+        @media (min-width: 769px) and (max-width: 1200px) {
+            .slide-1 {
+                background-position: center 35%;
+            }
+            
+            .slide-2 {
+                background-position: center 25%;
+            }
+            
+            .slide-3 {
+                background-position: center 40%;
+            }
+            
+            .slide-4 {
+                background-position: center 30%;
+            }
         }
         
         .hero-content {
@@ -890,7 +936,7 @@
                             <i class="fas fa-chart-line"></i>
                         </div>
                         <h5>Business Advisory</h5>
-                        <p>Strategic planning, investment consultancy services, insolvency and business restructuring.</p>
+                        <p>Strategic planning, business restructuring, and investment consultancy services.</p>
                     </div>
                 </div>
                 <div class="col-md-6 col-lg-4">
@@ -1315,11 +1361,17 @@
         
         // Start auto play
         startAutoPlay();
-        
-        // Team modal functions
-        function openModal(memberId) {
+    </script>
+    
+    <script>
+        // Team modal functions - must be global
+        window.openModal = function(memberId) {
             const modal = document.getElementById('modal-' + memberId);
             const backdrop = document.getElementById('modalBackdrop');
+            
+            console.log('Opening modal for:', memberId);
+            console.log('Modal element:', modal);
+            console.log('Backdrop element:', backdrop);
             
             if (modal && backdrop) {
                 backdrop.classList.add('show');
@@ -1328,7 +1380,7 @@
             }
         }
         
-        function closeModal() {
+        window.closeModal = function() {
             const modals = document.querySelectorAll('.team-modal');
             const backdrop = document.getElementById('modalBackdrop');
             
