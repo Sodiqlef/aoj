@@ -9,137 +9,707 @@
     <style>
         :root {
             --primary-grey: #2c3e50;
-            --secondary-grey: #95a5a6;
+            --secondary-grey: #546e7a;
             --light-grey: #ecf0f1;
-            --dark-grey: #34495e;
+            --dark-grey: #1a252f;
+            --accent-grey: #78909c;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
         
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
             color: var(--primary-grey);
+            line-height: 1.6;
+            overflow-x: hidden;
         }
         
+        /* Navigation */
         .navbar {
-            background-color: var(--primary-grey) !important;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            background: rgba(44, 62, 80, 0.95) !important;
+            backdrop-filter: blur(10px);
+            padding: 1rem 0;
+            transition: all 0.3s ease;
+        }
+        
+        .navbar.scrolled {
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
         }
         
         .navbar-brand {
-            font-weight: bold;
-            font-size: 1.5rem;
+            font-weight: 700;
+            font-size: 1.4rem;
+            letter-spacing: -0.5px;
         }
         
-        .hero-section {
-            background: linear-gradient(135deg, var(--primary-grey) 0%, var(--dark-grey) 100%);
-            color: white;
-            padding: 100px 0;
-            text-align: center;
-        }
-        
-        .hero-section h1 {
-            font-size: 3rem;
-            font-weight: bold;
-            margin-bottom: 20px;
-        }
-        
-        .hero-section p {
-            font-size: 1.3rem;
-            margin-bottom: 30px;
-        }
-        
-        .section-title {
-            color: var(--primary-grey);
-            font-weight: bold;
-            margin-bottom: 40px;
+        .nav-link {
+            font-weight: 500;
+            margin: 0 0.5rem;
             position: relative;
-            padding-bottom: 15px;
+            transition: color 0.3s ease;
         }
         
-        .section-title::after {
+        .nav-link::after {
             content: '';
             position: absolute;
-            bottom: 0;
+            bottom: -5px;
             left: 50%;
-            transform: translateX(-50%);
-            width: 80px;
-            height: 3px;
-            background-color: var(--secondary-grey);
+            transform: translateX(-50%) scaleX(0);
+            width: 30px;
+            height: 2px;
+            background: var(--light-grey);
+            transition: transform 0.3s ease;
         }
         
-        .service-card {
-            background: white;
-            border: none;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            transition: transform 0.3s, box-shadow 0.3s;
+        .nav-link:hover::after {
+            transform: translateX(-50%) scaleX(1);
+        }
+        
+        /* Hero Section */
+        .hero-section {
+            position: relative;
+            min-height: 90vh;
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+        }
+        
+        .hero-slider {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
             height: 100%;
         }
         
-        .service-card:hover {
+        .hero-slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 1.5s ease-in-out;
+            background-size: cover;
+            background-position: center;
+            z-index: 1;
+        }
+        
+        .hero-slide.active {
+            opacity: 1;
+            z-index: 2;
+        }
+        
+        .hero-slide::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(26, 37, 47, 0.85) 0%, rgba(44, 62, 80, 0.75) 50%, rgba(84, 110, 122, 0.85) 100%);
+        }
+        
+        .slide-1 {
+            background-image: url('img1.jpg');
+        }
+        
+        .slide-2 {
+            background-image: url('img2.png');
+        }
+        
+        .slide-3 {
+            background-image: url('img3.jpg');
+        }
+        
+        .slide-4 {
+            background-image: url('img4.jpg');
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 10;
+        }
+        
+        .slide-content {
+            display: none;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease-out;
+        }
+        
+        .slide-content.active {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+            animation: fadeInUp 1s ease-out;
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .hero-section h1 {
+            font-size: 4rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            color: white;
+            letter-spacing: -2px;
+            line-height: 1.1;
+        }
+        
+        .hero-section .subtitle {
+            font-size: 1.5rem;
+            color: rgba(255,255,255,0.9);
+            margin-bottom: 1rem;
+            font-weight: 300;
+        }
+        
+        .hero-section .tagline {
+            font-size: 1.1rem;
+            color: rgba(255,255,255,0.7);
+            margin-bottom: 2.5rem;
+        }
+        
+        .slider-indicators {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 12px;
+            z-index: 10;
+        }
+        
+        .indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.4);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .indicator.active {
+            background: white;
+            width: 40px;
+            border-radius: 6px;
+        }
+        
+        .slider-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            padding: 0 20px;
+            z-index: 10;
+            pointer-events: none;
+        }
+        
+        .slider-nav button {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.1);
+            border: 2px solid rgba(255,255,255,0.3);
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            pointer-events: all;
+            backdrop-filter: blur(5px);
+        }
+        
+        .slider-nav button:hover {
+            background: rgba(255,255,255,0.2);
+            border-color: rgba(255,255,255,0.5);
+        }
+        
+        .stats-row {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            margin-top: 4rem;
+            padding-top: 3rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            position: relative;
+            z-index: 10;
+            gap: 2rem;
+        }
+        
+        .stat-item {
+            text-align: center;
+            color: white;
+            flex: 1;
+        }
+        
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 700;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+        
+        .stat-label {
+            font-size: 0.95rem;
+            color: rgba(255,255,255,0.7);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        /* Section Styling */
+        section {
+            padding: 6rem 0;
+        }
+        
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--primary-grey);
+            letter-spacing: -1px;
+        }
+        
+        .section-subtitle {
+            font-size: 1.1rem;
+            color: var(--secondary-grey);
+            margin-bottom: 3rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        /* About Section */
+        .about-content {
+            display: grid;
+            gap: 2rem;
+        }
+        
+        .about-card {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 16px;
+            box-shadow: 0 4px 30px rgba(0,0,0,0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .about-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+            box-shadow: 0 8px 40px rgba(0,0,0,0.12);
+        }
+        
+        /* Service Cards */
+        .service-card {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 16px;
+            box-shadow: 0 4px 30px rgba(0,0,0,0.08);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            height: 100%;
+            border: 1px solid transparent;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-grey), var(--secondary-grey));
+            transform: scaleX(0);
+            transition: transform 0.4s ease;
+        }
+        
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 12px 50px rgba(0,0,0,0.15);
+            border-color: var(--light-grey);
+        }
+        
+        .service-card:hover::before {
+            transform: scaleX(1);
         }
         
         .service-icon {
-            font-size: 3rem;
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, var(--primary-grey), var(--secondary-grey));
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            transition: transform 0.4s ease;
+        }
+        
+        .service-card:hover .service-icon {
+            transform: scale(1.1) rotate(5deg);
+        }
+        
+        .service-icon i {
+            font-size: 2rem;
+            color: white;
+        }
+        
+        .service-card h5 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
             color: var(--primary-grey);
-            margin-bottom: 20px;
+        }
+        
+        .service-card p {
+            color: var(--secondary-grey);
+            margin: 0;
+            line-height: 1.7;
+        }
+        
+        /* Values Grid */
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
         }
         
         .value-card {
-            background: var(--light-grey);
-            padding: 30px;
-            border-radius: 10px;
-            margin-bottom: 20px;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            padding: 2rem;
+            border-radius: 12px;
             border-left: 4px solid var(--primary-grey);
+            transition: all 0.3s ease;
+        }
+        
+        .value-card:hover {
+            transform: translateX(5px);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+        }
+        
+        .value-card h5 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--primary-grey);
+            margin-bottom: 0.75rem;
+        }
+        
+        /* Team Cards */
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
         }
         
         .team-card {
             background: white;
-            border-radius: 10px;
-            padding: 30px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            margin-bottom: 30px;
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: 0 4px 30px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+            cursor: pointer;
         }
         
-        .contact-info {
+        .team-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 40px rgba(0,0,0,0.12);
+        }
+        
+        .team-card h5 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--primary-grey);
+            margin-bottom: 0.5rem;
+        }
+        
+        .team-card .title {
+            color: var(--secondary-grey);
+            font-size: 0.95rem;
+            margin-bottom: 1rem;
+            font-weight: 500;
+        }
+        
+        .team-card .read-more {
+            color: var(--primary-grey);
+            font-weight: 600;
+            margin-top: 1rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .team-card .read-more i {
+            transition: transform 0.3s ease;
+        }
+        
+        .team-card:hover .read-more i {
+            transform: translateX(5px);
+        }
+        
+        /* Modal Styles */
+        .modal-backdrop {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            z-index: 1000;
+            display: none;
+            backdrop-filter: blur(5px);
+        }
+        
+        .modal-backdrop.show {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .team-modal {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            border-radius: 20px;
+            padding: 3rem;
+            max-width: 700px;
+            width: 90%;
+            max-height: 85vh;
+            overflow-y: auto;
+            z-index: 1001;
+            display: none;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        
+        .team-modal.show {
+            display: block;
+            animation: modalSlideIn 0.4s ease;
+        }
+        
+        @keyframes modalSlideIn {
+            from {
+                opacity: 0;
+                transform: translate(-50%, -45%);
+            }
+            to {
+                opacity: 1;
+                transform: translate(-50%, -50%);
+            }
+        }
+        
+        .modal-close {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            background: var(--light-grey);
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            font-size: 1.2rem;
+            color: var(--primary-grey);
+        }
+        
+        .modal-close:hover {
             background: var(--primary-grey);
             color: white;
-            padding: 40px;
-            border-radius: 10px;
+            transform: rotate(90deg);
         }
         
-        .contact-info i {
+        .modal-header h3 {
+            color: var(--primary-grey);
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+        
+        .modal-header .role {
+            color: var(--secondary-grey);
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--light-grey);
+        }
+        
+        .modal-body p {
+            color: var(--primary-grey);
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+        
+        /* Pledge Section */
+        .pledge-card {
+            background: white;
+            padding: 3rem;
+            border-radius: 16px;
+            box-shadow: 0 4px 30px rgba(0,0,0,0.08);
+        }
+        
+        .pledge-list {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .pledge-list li {
+            display: flex;
+            align-items: start;
+            margin-bottom: 1.5rem;
+            padding: 1.5rem;
+            background: var(--light-grey);
+            border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+        
+        .pledge-list li:hover {
+            transform: translateX(5px);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+        
+        .pledge-list li i {
             font-size: 1.5rem;
-            margin-right: 15px;
-            color: var(--light-grey);
+            color: var(--primary-grey);
+            margin-right: 1.5rem;
+            margin-top: 0.2rem;
         }
         
-        .btn-custom {
-            background-color: var(--secondary-grey);
+        /* Contact Section */
+        .contact-card {
+            background: linear-gradient(135deg, var(--primary-grey), var(--dark-grey));
             color: white;
-            padding: 12px 30px;
+            padding: 3rem;
+            border-radius: 16px;
+            box-shadow: 0 8px 40px rgba(0,0,0,0.15);
+        }
+        
+        .contact-card h4 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+        }
+        
+        .contact-item {
+            display: flex;
+            align-items: start;
+            margin-bottom: 1.5rem;
+        }
+        
+        .contact-item i {
+            font-size: 1.3rem;
+            margin-right: 1rem;
+            color: var(--light-grey);
+            margin-top: 3px;
+        }
+        
+        /* Button */
+        .btn-custom {
+            background: white;
+            color: var(--primary-grey);
+            padding: 1rem 2.5rem;
             border: none;
-            border-radius: 5px;
-            font-weight: bold;
-            transition: background-color 0.3s;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1.05rem;
+            transition: all 0.3s ease;
+            display: inline-block;
+            text-decoration: none;
         }
         
         .btn-custom:hover {
-            background-color: var(--primary-grey);
-            color: white;
-        }
-        
-        footer {
-            background-color: var(--primary-grey);
-            color: white;
-            padding: 30px 0;
-            margin-top: 50px;
-        }
-        
-        .client-list {
             background: var(--light-grey);
-            padding: 20px;
-            border-radius: 5px;
+            color: var(--primary-grey);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+        }
+        
+        /* Clients Section */
+        .clients-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .client-item {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.06);
+            display: flex;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+        
+        .client-item:hover {
+            transform: translateX(5px);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+        
+        .client-item i {
+            color: var(--secondary-grey);
+            margin-right: 1rem;
+        }
+        
+        /* Footer */
+        footer {
+            background: var(--dark-grey);
+            color: rgba(255,255,255,0.8);
+            padding: 3rem 0;
+            margin-top: 0;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero-section h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero-section .subtitle {
+                font-size: 1.2rem;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            .stats-row {
+                margin-top: 2rem;
+                flex-direction: column;
+                gap: 1.5rem;
+                padding-top: 2rem;
+            }
+            
+            .stat-number {
+                font-size: 2rem;
+            }
+            
+            .slider-nav button {
+                width: 40px;
+                height: 40px;
+                font-size: 0.9rem;
+            }
         }
     </style>
 </head>
@@ -156,7 +726,7 @@
                     <li class="nav-item"><a class="nav-link" href="#home">Home</a></li>
                     <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
                     <li class="nav-item"><a class="nav-link" href="#services">Services</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#team">Our Team</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#team">Team</a></li>
                     <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
                 </ul>
             </div>
@@ -165,108 +735,187 @@
 
     <!-- Hero Section -->
     <section id="home" class="hero-section">
+        <div class="hero-slider">
+            <div class="hero-slide slide-1 active"></div>
+            <div class="hero-slide slide-2"></div>
+            <div class="hero-slide slide-3"></div>
+            <div class="hero-slide slide-4"></div>
+        </div>
+        
+        <div class="slider-nav">
+            <button id="prevSlide"><i class="fas fa-chevron-left"></i></button>
+            <button id="nextSlide"><i class="fas fa-chevron-right"></i></button>
+        </div>
+        
         <div class="container">
-            <h1>AOJ Professional Services</h1>
-            <p class="lead">Chartered Accountants | Audit, Advisory, Training & Tax Services</p>
-            <p>Providing Excellent Business Services That Add Value To Our Clients</p>
-            <a href="#contact" class="btn btn-custom btn-lg">Get In Touch</a>
+            <div class="hero-content">
+                <div class="slide-content active" data-slide="0">
+                    <h1>AOJ Professional<br>Services</h1>
+                    <p class="subtitle">Excellence in Financial Services</p>
+                    <p class="tagline">Chartered Accountants delivering audit, advisory, training & tax services</p>
+                    <a href="#contact" class="btn-custom">Get Started</a>
+                </div>
+                
+                <div class="slide-content" data-slide="1">
+                    <h1>Strategic Business<br>Advisory</h1>
+                    <p class="subtitle">Empowering Your Business Growth</p>
+                    <p class="tagline">Expert consulting services to help you achieve your business objectives</p>
+                    <a href="#services" class="btn-custom">Our Services</a>
+                </div>
+                
+                <div class="slide-content" data-slide="2">
+                    <h1>Professional<br>Training Programs</h1>
+                    <p class="subtitle">Develop Your Team's Potential</p>
+                    <p class="tagline">Comprehensive training and executive coaching for lasting success</p>
+                    <a href="#team" class="btn-custom">Meet Our Team</a>
+                </div>
+                
+                <div class="slide-content" data-slide="3">
+                    <h1>Trusted by<br>Leading Organizations</h1>
+                    <p class="subtitle">25+ Years of Excellence</p>
+                    <p class="tagline">Providing reliable business support services since 1998</p>
+                    <a href="#about" class="btn-custom">Learn More</a>
+                </div>
+                
+                <div class="stats-row">
+                    <div class="col-md-4 stat-item">
+                        <span class="stat-number">25+</span>
+                        <span class="stat-label">Years Experience</span>
+                    </div>
+                    <div class="col-md-4 stat-item">
+                        <span class="stat-number">100+</span>
+                        <span class="stat-label">Clients Served</span>
+                    </div>
+                    <div class="col-md-4 stat-item">
+                        <span class="stat-number">7</span>
+                        <span class="stat-label">Expert Consultants</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="slider-indicators">
+            <div class="indicator active" data-slide="0"></div>
+            <div class="indicator" data-slide="1"></div>
+            <div class="indicator" data-slide="2"></div>
+            <div class="indicator" data-slide="3"></div>
         </div>
     </section>
 
     <!-- About Section -->
-    <section id="about" class="py-5">
+    <section id="about">
         <div class="container">
-            <h2 class="text-center section-title">About Us</h2>
+            <div class="text-center mb-5">
+                <h2 class="section-title">About Us</h2>
+                <p class="section-subtitle">Excellence in financial services since 1998</p>
+            </div>
             <div class="row">
                 <div class="col-lg-8 mx-auto">
-                    <p class="lead text-center">AOJ Professional Services (Chartered Accountants) is a medium size audit, advisory, training and tax services firm established to help businesses create value for their customers. The emphasis of our work is on practical solutions to enhance business success.</p>
-                    <p class="text-center">We offer assurance and related consulting services, bookkeeping and accountancy, strategic business and investment consultancy, Information Technology and Security Services, In-Business Courses, In-House Training and One-to-One Executive Coaching.</p>
-                    <p class="text-center">The firm started financial training and consulting operations in February 1998 and was formally renamed AOJ Professional Services in 2008.</p>
+                    <div class="about-card">
+                        <p class="lead">AOJ Professional Services (Chartered Accountants) is a medium size audit, advisory, training and tax services firm established to help businesses create value for their customers. The emphasis of our work is on practical solutions to enhance business success.</p>
+                        <p>We offer assurance and related consulting services, bookkeeping and accountancy, strategic business and investment consultancy, Information Technology and Security Services, In-Business Courses, In-House Training and One-to-One Executive Coaching.</p>
+                        <p class="mb-0">The firm started financial training and consulting operations in February 1998 and was formally renamed AOJ Professional Services in 2008.</p>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Mission & Vision -->
-    <section class="py-5 bg-light">
+    <!-- Mission & Values -->
+    <section class="bg-light">
         <div class="container">
-            <div class="row">
-                <div class="col-md-6">
-                    <h3 class="mb-4"><i class="fas fa-bullseye me-2"></i>Our Vision & Mission</h3>
-                    <p class="fw-bold">It is our VISION to emerge among top three Small and Medium-Sized Audit Practitioners in Nigeria by "PROVIDING EXCELLENT BUSINESS SERVICES THAT ADD VALUE TO OUR CLIENTS"</p>
-                    <p>We provide the most reliable and responsible business support services to our clients and are committed partners towards their growth and continuing success.</p>
-                    <ul>
-                        <li>Empower organizations to achieve their potential capabilities and performance</li>
-                        <li>Operate responsibly with integrity in delivering our services to uplift our clients</li>
-                        <li>Deliver with passion and purpose in whatever we do</li>
-                    </ul>
+            <div class="row mb-5">
+                <div class="col-lg-10 mx-auto">
+                    <div class="about-card">
+                        <h3 class="mb-4">Our Vision & Mission</h3>
+                        <p class="lead">It is our VISION to emerge among top three Small and Medium-Sized Audit Practitioners in Nigeria by "PROVIDING EXCELLENT BUSINESS SERVICES THAT ADD VALUE TO OUR CLIENTS"</p>
+                        <p>We provide the most reliable and responsible business support services to our clients and are committed partners towards their growth and continuing success.</p>
+                    </div>
                 </div>
-                <div class="col-md-6">
-                    <h3 class="mb-4"><i class="fas fa-gem me-2"></i>Core Values</h3>
-                    <div class="value-card">
-                        <h5><strong>INTEGRITY</strong></h5>
-                        <p>We put high importance on personal and corporate integrity.</p>
-                    </div>
-                    <div class="value-card">
-                        <h5><strong>EXCELLENCE</strong></h5>
-                        <p>We have a culture of continuously striving for excellence & for the best in everything we do.</p>
-                    </div>
-                    <div class="value-card">
-                        <h5><strong>CONNECTING</strong></h5>
-                        <p>We are constantly connecting with ourselves, with other people, businesses and treating our colleagues and clients with utmost respect.</p>
-                    </div>
-                    <div class="value-card">
-                        <h5><strong>WIN-WIN</strong></h5>
-                        <p>We are committed to a lifelong principle of mutual benefit, supporting each other's growth in creating win-win for all.</p>
-                    </div>
+            </div>
+            
+            <div class="text-center mb-4">
+                <h3 class="section-title">Core Values</h3>
+            </div>
+            <div class="values-grid">
+                <div class="value-card">
+                    <h5>INTEGRITY</h5>
+                    <p>We put high importance on personal and corporate integrity.</p>
+                </div>
+                <div class="value-card">
+                    <h5>EXCELLENCE</h5>
+                    <p>We have a culture of continuously striving for excellence & for the best in everything we do.</p>
+                </div>
+                <div class="value-card">
+                    <h5>CONNECTING</h5>
+                    <p>We are constantly connecting with ourselves, with other people, businesses and treating our colleagues and clients with utmost respect.</p>
+                </div>
+                <div class="value-card">
+                    <h5>WIN-WIN</h5>
+                    <p>We are committed to a lifelong principle of mutual benefit, supporting each other's growth in creating win-win for all.</p>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Services Section -->
-    <section id="services" class="py-5">
+    <section id="services">
         <div class="container">
-            <h2 class="text-center section-title">Our Services</h2>
+            <div class="text-center mb-5">
+                <h2 class="section-title">Our Services</h2>
+                <p class="section-subtitle">Comprehensive solutions for your business needs</p>
+            </div>
             <div class="row g-4">
-                <div class="col-md-4">
-                    <div class="card service-card p-4 text-center">
-                        <i class="fas fa-clipboard-check service-icon"></i>
+                <div class="col-md-6 col-lg-4">
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i class="fas fa-clipboard-check"></i>
+                        </div>
                         <h5>Audit & Assurance</h5>
                         <p>Comprehensive audit and bookkeeping services, corporate governance audit, and internal audit quality review.</p>
                     </div>
                 </div>
-                <div class="col-md-4">
-                    <div class="card service-card p-4 text-center">
-                        <i class="fas fa-calculator service-icon"></i>
+                <div class="col-md-6 col-lg-4">
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i class="fas fa-calculator"></i>
+                        </div>
                         <h5>Tax Consultancy</h5>
                         <p>Expert tax consulting services to ensure compliance and optimize your tax position.</p>
                     </div>
                 </div>
-                <div class="col-md-4">
-                    <div class="card service-card p-4 text-center">
-                        <i class="fas fa-chart-line service-icon"></i>
+                <div class="col-md-6 col-lg-4">
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
                         <h5>Business Advisory</h5>
-                        <p>Strategic planning, business restructuring, and investment consultancy services.</p>
+                        <p>Strategic planning, investment consultancy services, insolvency and business restructuring.</p>
                     </div>
                 </div>
-                <div class="col-md-4">
-                    <div class="card service-card p-4 text-center">
-                        <i class="fas fa-users service-icon"></i>
+                <div class="col-md-6 col-lg-4">
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
                         <h5>Training & Development</h5>
                         <p>Financial and leadership training, team building, and executive coaching programs.</p>
                     </div>
                 </div>
-                <div class="col-md-4">
-                    <div class="card service-card p-4 text-center">
-                        <i class="fas fa-balance-scale service-icon"></i>
+                <div class="col-md-6 col-lg-4">
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i class="fas fa-balance-scale"></i>
+                        </div>
                         <h5>Board Appraisal</h5>
                         <p>Comprehensive board appraisal and corporate governance consulting services.</p>
                     </div>
                 </div>
-                <div class="col-md-4">
-                    <div class="card service-card p-4 text-center">
-                        <i class="fas fa-file-invoice-dollar service-icon"></i>
+                <div class="col-md-6 col-lg-4">
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i class="fas fa-file-invoice-dollar"></i>
+                        </div>
                         <h5>Accounting Services</h5>
                         <p>Staff audit, payroll processing, accounts payable/receivable, and bank reconciliation.</p>
                     </div>
@@ -276,107 +925,238 @@
     </section>
 
     <!-- Team Section -->
-    <section id="team" class="py-5 bg-light">
+    <section id="team" class="bg-light">
         <div class="container">
-            <h2 class="text-center section-title">Our Team</h2>
-            <div class="row">
-                <div class="col-lg-6">
-                    <div class="team-card">
-                        <h5 class="fw-bold">Joseph Nosa - Principal Consultant</h5>
-                        <p class="text-muted">Fellow, Institute of Chartered Accountants of Nigeria (FCA)</p>
-                        <p>Joseph has over 25 years of experience in Audit and Financial Consulting Management Development. He is a dynamic, enthusiastic, and energetic facilitator and trainer with a passionate belief that people are the key to success in any organization. He is an alumnus of London Business School and University of Northampton, UK, with extensive experience in banking and public accountancy practice including Risk Management, Corporate Banking, and Internal Audit.</p>
-                    </div>
+            <div class="text-center mb-5">
+                <h2 class="section-title">Our Team</h2>
+                <p class="section-subtitle">Expert consultants with decades of combined experience</p>
+            </div>
+            <div class="team-grid">
+                <div class="team-card" onclick="openModal('joseph')">
+                    <h5>Joseph Nosa</h5>
+                    <p class="title">Principal Consultant | FCA</p>
+                    <p>Over 25 years of experience in Audit and Financial Consulting Management Development. Alumnus of London Business School and University of Northampton, UK.</p>
+                    <span class="read-more">Read Full Profile <i class="fas fa-arrow-right"></i></span>
                 </div>
-                <div class="col-lg-6">
-                    <div class="team-card">
-                        <h5 class="fw-bold">Dr. Abubakar Manga - Consultant</h5>
-                        <p class="text-muted">Doctorate in Accounting</p>
-                        <p>Dr. Manga is an erudite scholar with over 30 years' experience in Banking, Financial Consulting and Management Development. He has Masters and Doctorate Degrees in Accounting and related development areas. Over the years, he has consulted for many organizations in Public Sector Efficiency and Effectiveness, Financial Management and Development Economy.</p>
-                    </div>
+                <div class="team-card" onclick="openModal('abubakar')">
+                    <h5>Dr. Abubakar Manga</h5>
+                    <p class="title">Consultant | Doctorate in Accounting</p>
+                    <p>Over 30 years' experience in Banking, Financial Consulting and Management Development with expertise in Public Sector Efficiency.</p>
+                    <span class="read-more">Read Full Profile <i class="fas fa-arrow-right"></i></span>
                 </div>
-                <div class="col-lg-6">
-                    <div class="team-card">
-                        <h5 class="fw-bold">Fidelis Akaeze - Consultant</h5>
-                        <p class="text-muted">Associate, Institute of Chartered Accountants of Nigeria (ACA)</p>
-                        <p>Fidelis has many years of experience in varied sectors of Nigerian Economy. Prior to becoming a Consultant, he was at various times Chief Internal Auditor of a number of multi-national organizations. He has a solid academic background in Accounting and Management and is a facilitator for various training programmes in policy formulation, systems and change management. Fidelis has passion for delivering value to clients for sustainable business growth.</p>
-                    </div>
+                <div class="team-card" onclick="openModal('fidelis')">
+                    <h5>Fidelis Akaeze</h5>
+                    <p class="title">Consultant | ACA</p>
+                    <p>Extensive experience across Nigerian Economy sectors with expertise in policy formulation, systems and change management.</p>
+                    <span class="read-more">Read Full Profile <i class="fas fa-arrow-right"></i></span>
                 </div>
-                <div class="col-lg-6">
-                    <div class="team-card">
-                        <h5 class="fw-bold">Ajiboso Oyenike - Consultant</h5>
-                        <p class="text-muted">Technology Research & Financial Management Specialist</p>
-                        <p>Oyenike has a strong academic and working background in Technology Research and Financial Management. She is passionate and proactive in providing solution to clients' needs. Oyenike is a specialist in Business Economic Research and Data Collation.</p>
-                    </div>
+                <div class="team-card" onclick="openModal('oyenike')">
+                    <h5>Ajiboso Oyenike</h5>
+                    <p class="title">Consultant | Technology Research Specialist</p>
+                    <p>Strong background in Technology Research and Financial Management with expertise in Business Economic Research.</p>
+                    <span class="read-more">Read Full Profile <i class="fas fa-arrow-right"></i></span>
                 </div>
-                <div class="col-lg-6">
-                    <div class="team-card">
-                        <h5 class="fw-bold">Olusegun Omoletor - Consultant</h5>
-                        <p class="text-muted">Corporate Governance & HR Specialist</p>
-                        <p>Olusegun has academic and working background in Corporate Governance, Human Resources and Business Performance Research, Ethics and Accounting. He has many years of working experience in NAFDAC, Cooperative Society Integrated Business Ltd and Public Consulting.</p>
-                    </div>
+                <div class="team-card" onclick="openModal('olusegun')">
+                    <h5>Olusegun Omoletor</h5>
+                    <p class="title">Consultant | Corporate Governance Specialist</p>
+                    <p>Expert in Corporate Governance, Human Resources and Business Performance Research with diverse industry experience.</p>
+                    <span class="read-more">Read Full Profile <i class="fas fa-arrow-right"></i></span>
                 </div>
-                <div class="col-lg-6">
-                    <div class="team-card">
-                        <h5 class="fw-bold">Patrick Olashinde Daniels - Associate Consultant</h5>
-                        <p class="text-muted">Certified Fraud Examiner (CFE)</p>
-                        <p>Patrick has academic and working background in Corporate Governance, Research, Ethics and Accounting. As a CFE (Certified Fraud Examiner), he has many years of working experience in various Financial Institutions.</p>
-                    </div>
+                <div class="team-card" onclick="openModal('patrick')">
+                    <h5>Patrick Olashinde Daniels</h5>
+                    <p class="title">Associate Consultant | CFE</p>
+                    <p>Certified Fraud Examiner with extensive experience in various Financial Institutions and corporate governance.</p>
+                    <span class="read-more">Read Full Profile <i class="fas fa-arrow-right"></i></span>
                 </div>
-                <div class="col-lg-6">
-                    <div class="team-card">
-                        <h5 class="fw-bold">Rafiu Olaoye - Associate Consultant</h5>
-                        <p class="text-muted">Fellow, Institute of Chartered Accountants of Nigeria (FCA)</p>
-                        <p>Rafiu has many years of experience in Audit, Advisory and Financial Training. At various times, he was involved in technical research on International Financial Reporting Standards (IFRS).</p>
-                    </div>
+                <div class="team-card" onclick="openModal('rafiu')">
+                    <h5>Rafiu Olaoye</h5>
+                    <p class="title">Associate Consultant | FCA</p>
+                    <p>Extensive experience in Audit, Advisory and Financial Training with technical expertise in IFRS.</p>
+                    <span class="read-more">Read Full Profile <i class="fas fa-arrow-right"></i></span>
                 </div>
             </div>
         </div>
     </section>
+    
+    <!-- Team Modals -->
+    <div class="modal-backdrop" id="modalBackdrop" onclick="closeModal()"></div>
+    
+    <!-- Joseph Modal -->
+    <div class="team-modal" id="modal-joseph">
+        <button class="modal-close" onclick="closeModal()"><i class="fas fa-times"></i></button>
+        <div class="modal-header">
+            <h3>Joseph Nosa</h3>
+            <p class="role">Principal Consultant | FCA</p>
+        </div>
+        <div class="modal-body">
+            <p>Joseph Nosa has over 25 years of experience in Audit, Financial Consulting Management Development. He has a passionate belief that people are the key to success in any organization.</p>
+            <p>Joseph is a Fellow of the Institute of Chartered Accountants of Nigeria (FCA). He has also attended many international trainings in financial management. He is an alumnus of London Business School and University of Northampton, UK. He had public accountancy practice in Johnson and Associates, and JBA and Co for many years before moving to the banking industry. While in banking industry, he worked in various areas including Risk Management, Bad Loan Work Out and Business Restructuring, Corporate Banking, Operations, Retail Sales, Property Management, Project Marketing, Corporate Governance, Compliance, and Internal Audit.</p>
+            <p>Joseph has a passion for enabling people to learn in a more sustainable training approach. He is a dynamic, enthusiastic, and energetic facilitator and trainer. He believes in always working for the interest of the clients and yet is also able to challenge sensitively to lead change where appropriate.</p>
+        </div>
+    </div>
+    
+    <!-- Abubakar Modal -->
+    <div class="team-modal" id="modal-abubakar">
+        <button class="modal-close" onclick="closeModal()"><i class="fas fa-times"></i></button>
+        <div class="modal-header">
+            <h3>Dr. Abubakar Manga</h3>
+            <p class="role">Consultant | Doctorate in Accounting</p>
+        </div>
+        <div class="modal-body">
+            <p>Dr. Abubakar Manga has had over 30 years' experience in Banking, Financial Consulting and Management Development. He is an erudite scholar. He has Masters and Doctorate Degrees in Accounting and related development areas. Over the years, he has consulted for many organizations in Public Sector Efficiency and Effectiveness, Financial Management and Development Economy.</p>
+        </div>
+    </div>
+    
+    <!-- Fidelis Modal -->
+    <div class="team-modal" id="modal-fidelis">
+        <button class="modal-close" onclick="closeModal()"><i class="fas fa-times"></i></button>
+        <div class="modal-header">
+            <h3>Fidelis Akaeze</h3>
+            <p class="role">Consultant | ACA</p>
+        </div>
+        <div class="modal-body">
+            <p>Fidelis Akaeze also has many years of experience in varied sectors of Nigerian Economy. Fidelis is an Associate of the Institute of Chartered Accountants of Nigeria (ACA). Prior to becoming a Consultant, he was at various times Chief Internal Auditor of a number of multi-national organizations.</p>
+            <p>Fidelis has a solid academic background in Accounting and Management. He is a facilitator for various training programmes in policy formulation and systems and change management. He was involved in designing various training curriculum for Lagos Mainland District of the Institute of Chartered Accountants of Nigeria.</p>
+            <p>Fidelis has passion for delivering value to clients for sustainable business growth.</p>
+        </div>
+    </div>
+    
+    <!-- Oyenike Modal -->
+    <div class="team-modal" id="modal-oyenike">
+        <button class="modal-close" onclick="closeModal()"><i class="fas fa-times"></i></button>
+        <div class="modal-header">
+            <h3>Ajiboso Oyenike</h3>
+            <p class="role">Consultant | Technology Research Specialist</p>
+        </div>
+        <div class="modal-body">
+            <p>Ajiboso Oyenike has a strong academic and working background in Technology Research and Financial Management. She is passionate and proactive in providing solution to clients' needs. Oyenike is a specialist in Business Economic Research and Data Collation.</p>
+        </div>
+    </div>
+    
+    <!-- Olusegun Modal -->
+    <div class="team-modal" id="modal-olusegun">
+        <button class="modal-close" onclick="closeModal()"><i class="fas fa-times"></i></button>
+        <div class="modal-header">
+            <h3>Olusegun Omoletor</h3>
+            <p class="role">Consultant | Corporate Governance Specialist</p>
+        </div>
+        <div class="modal-body">
+            <p>Olusegun Omoletor has academic and working background in Corporate Governance, Human Resources and Business Performance Research, Ethics and Accounting. He has many years of working experience in NAFDAC, Cooperative Society Integrated Business Ltd and Public Consulting.</p>
+        </div>
+    </div>
+    
+    <!-- Patrick Modal -->
+    <div class="team-modal" id="modal-patrick">
+        <button class="modal-close" onclick="closeModal()"><i class="fas fa-times"></i></button>
+        <div class="modal-header">
+            <h3>Patrick Olashinde Daniels</h3>
+            <p class="role">Associate Consultant | CFE</p>
+        </div>
+        <div class="modal-body">
+            <p>Patrick Olashinde Daniels has academic and working background in Corporate Governance, Research, Ethics and Accounting. He is also a CFE (Certified Fraud Examiner) has many years of working experience in various Financial Institutions.</p>
+        </div>
+    </div>
+    
+    <!-- Rafiu Modal -->
+    <div class="team-modal" id="modal-rafiu">
+        <button class="modal-close" onclick="closeModal()"><i class="fas fa-times"></i></button>
+        <div class="modal-header">
+            <h3>Rafiu Olaoye</h3>
+            <p class="role">Associate Consultant | FCA</p>
+        </div>
+        <div class="modal-body">
+            <p>Rafiu Olaoye has many years of experience in Audit, Advisory and Financial Training. At various times, he was involved in technical research on International Financial Reporting Standards (IFRS). Rafiu is a Fellow of the Institute of Chartered Accountants of Nigeria (FCA).</p>
+        </div>
+    </div>
 
     <!-- Clients Section -->
-    <section class="py-5">
+    <section>
         <div class="container">
-            <h2 class="text-center section-title">Our Clients</h2>
-            <div class="client-list">
-                <div class="row">
-                    <div class="col-md-6">
-                        <ul>
-                            <li>Investment One Financial Services Ltd.</li>
-                            <li>Investment One Pension Managers Ltd.</li>
-                            <li>GTB Pension Managers Ltd</li>
-                            <li>Orange One Finance Ltd</li>
-                            <li>Norrenberger Group Ltd</li>
-                            <li>Rali Food and Confectioneries</li>
-                        </ul>
-                    </div>
-                    <div class="col-md-6">
-                        <ul>
-                            <li>Experior Diagnostics Ltd</li>
-                            <li>Quadrant Advisory Ltd</li>
-                            <li>Jolly Bros Nigeria Ltd.</li>
-                            <li>Yaba College of Technology</li>
-                            <li>Ogun State Polytechnic</li>
-                            <li>National Aids Control Programme</li>
-                        </ul>
-                    </div>
+            <div class="text-center mb-5">
+                <h2 class="section-title">Our Clients</h2>
+                <p class="section-subtitle">Trusted by leading organizations across Nigeria</p>
+            </div>
+            <div class="clients-grid">
+                <div class="client-item">
+                    <i class="fas fa-building"></i>
+                    <span>Investment One Financial Services Ltd.</span>
+                </div>
+                <div class="client-item">
+                    <i class="fas fa-building"></i>
+                    <span>Investment One Pension Managers Ltd.</span>
+                </div>
+                <div class="client-item">
+                    <i class="fas fa-building"></i>
+                    <span>GTB Pension Managers Ltd</span>
+                </div>
+                <div class="client-item">
+                    <i class="fas fa-building"></i>
+                    <span>Orange One Finance Ltd</span>
+                </div>
+                <div class="client-item">
+                    <i class="fas fa-building"></i>
+                    <span>Norrenberger Group Ltd</span>
+                </div>
+                <div class="client-item">
+                    <i class="fas fa-building"></i>
+                    <span>Rali Food and Confectioneries</span>
+                </div>
+                <div class="client-item">
+                    <i class="fas fa-building"></i>
+                    <span>Experior Diagnostics Ltd</span>
+                </div>
+                <div class="client-item">
+                    <i class="fas fa-building"></i>
+                    <span>Quadrant Advisory Ltd</span>
+                </div>
+                <div class="client-item">
+                    <i class="fas fa-building"></i>
+                    <span>Jolly Bros Nigeria Ltd.</span>
+                </div>
+                <div class="client-item">
+                    <i class="fas fa-graduation-cap"></i>
+                    <span>Yaba College of Technology</span>
+                </div>
+                <div class="client-item">
+                    <i class="fas fa-graduation-cap"></i>
+                    <span>Ogun State Polytechnic</span>
+                </div>
+                <div class="client-item">
+                    <i class="fas fa-heartbeat"></i>
+                    <span>National Aids Control Programme</span>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Pledge Section -->
-    <section class="py-5 bg-light">
+    <section class="bg-light">
         <div class="container">
-            <h2 class="text-center section-title">Our Pledge</h2>
+            <div class="text-center mb-5">
+                <h2 class="section-title">Our Pledge</h2>
+                <p class="section-subtitle">Our commitment to excellence and integrity</p>
+            </div>
             <div class="row">
                 <div class="col-lg-10 mx-auto">
-                    <div class="card border-0 shadow-sm p-4">
+                    <div class="pledge-card">
                         <p class="lead text-center mb-4">The business is built on the foundation that:</p>
-                        <ul class="list-unstyled">
-                            <li class="mb-3"><i class="fas fa-check-circle text-success me-2"></i>The trust that our clients place on us must never be misplaced</li>
-                            <li class="mb-3"><i class="fas fa-check-circle text-success me-2"></i>We shall always provide the most truthful and accurate information and assessment to our clients, partners or associates</li>
-                            <li class="mb-3"><i class="fas fa-check-circle text-success me-2"></i>We shall never disclose any trade secrets, project scope of works, project results or any other sensitive information disclosed to us by our clients or partners</li>
-                            <li class="mb-3"><i class="fas fa-check-circle text-success me-2"></i>We shall only be involved in businesses or projects that are not harmful to the environment, and responsibly conducted with regard to social, financial and environmental concerns</li>
+                        <ul class="pledge-list">
+                            <li>
+                                <i class="fas fa-shield-alt"></i>
+                                <span>The trust that our clients place on us must never be misplaced</span>
+                            </li>
+                            <li>
+                                <i class="fas fa-check-circle"></i>
+                                <span>We shall always provide the most truthful and accurate information and assessment to our clients, partners or associates</span>
+                            </li>
+                            <li>
+                                <i class="fas fa-lock"></i>
+                                <span>We shall never disclose any trade secrets, project scope of works, project results or any other sensitive information disclosed to us by our clients or partners</span>
+                            </li>
+                            <li>
+                                <i class="fas fa-leaf"></i>
+                                <span>We shall only be involved in businesses or projects that are not harmful to the environment, and responsibly conducted with regard to social, financial and environmental concerns</span>
+                            </li>
                         </ul>
                     </div>
                 </div>
@@ -385,22 +1165,45 @@
     </section>
 
     <!-- Contact Section -->
-    <section id="contact" class="py-5 bg-light">
+    <section id="contact" class="bg-light">
         <div class="container">
-            <h2 class="text-center section-title">Contact Us</h2>
-            <div class="row">
-                <div class="col-md-6 mb-4">
-                    <div class="contact-info">
-                        <h4 class="mb-4">Lagos Office</h4>
-                        <p><i class="fas fa-map-marker-alt"></i>3, Franklin Road, Off Abule-Nla Street<br>Costain, Ebute Metta, Lagos</p>
-                        <p><i class="fas fa-phone"></i>07089997052, 08077435429</p>
-                        <p><i class="fas fa-envelope"></i>aojprofessionals@gmail.com</p>
+            <div class="text-center mb-5">
+                <h2 class="section-title">Contact Us</h2>
+                <p class="section-subtitle">Get in touch with our team today</p>
+            </div>
+            <div class="row g-4">
+                <div class="col-md-6">
+                    <div class="contact-card">
+                        <h4>Lagos Office</h4>
+                        <div class="contact-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <div>
+                                <p>3, Franklin Road, Off Abule-Nla Street<br>Costain, Ebute Metta, Lagos</p>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-phone"></i>
+                            <div>
+                                <p>07089997052<br>08077435429</p>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-envelope"></i>
+                            <div>
+                                <p>aojprofessionals@gmail.com</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="col-md-6 mb-4">
-                    <div class="contact-info">
-                        <h4 class="mb-4">Abuja Office</h4>
-                        <p><i class="fas fa-map-marker-alt"></i>OYO HOUSE, Rear Wing, Second Floor<br>Central Business District, Abuja</p>
+                <div class="col-md-6">
+                    <div class="contact-card">
+                        <h4>Abuja Office</h4>
+                        <div class="contact-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <div>
+                                <p>OYO HOUSE, Rear Wing, Second Floor<br>Central Business District, Abuja</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -410,27 +1213,135 @@
     <!-- Footer -->
     <footer class="text-center">
         <div class="container">
-            <p class="mb-0">&copy; 2025 AOJ Professional Services. All Rights Reserved.</p>
-            <p class="mt-2">Chartered Accountants | Audit, Advisory, Training & Tax Services</p>
+            <p class="mb-2">&copy; 2025 AOJ Professional Services. All Rights Reserved.</p>
+            <p>Chartered Accountants | Audit, Advisory, Training & Tax Services</p>
         </div>
     </footer>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
     <script>
-        // Smooth scrolling for navigation links
+        // Smooth scrolling
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
                 const target = document.querySelector(this.getAttribute('href'));
                 if (target) {
                     target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                    // Close mobile menu if open
                     const navCollapse = document.querySelector('.navbar-collapse');
                     if (navCollapse.classList.contains('show')) {
                         navCollapse.classList.remove('show');
                     }
                 }
             });
+        });
+        
+        // Navbar scroll effect
+        window.addEventListener('scroll', () => {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+        
+        // Hero slider functionality
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.hero-slide');
+        const slideContents = document.querySelectorAll('.slide-content');
+        const indicators = document.querySelectorAll('.indicator');
+        const totalSlides = slides.length;
+        let autoPlayInterval;
+        
+        function showSlide(index) {
+            // Remove active class from all slides and contents
+            slides.forEach(slide => slide.classList.remove('active'));
+            slideContents.forEach(content => content.classList.remove('active'));
+            indicators.forEach(indicator => indicator.classList.remove('active'));
+            
+            // Add active class to current slide and content
+            slides[index].classList.add('active');
+            slideContents[index].classList.add('active');
+            indicators[index].classList.add('active');
+            
+            currentSlide = index;
+        }
+        
+        function nextSlide() {
+            let next = (currentSlide + 1) % totalSlides;
+            showSlide(next);
+        }
+        
+        function prevSlide() {
+            let prev = (currentSlide - 1 + totalSlides) % totalSlides;
+            showSlide(prev);
+        }
+        
+        // Auto play
+        function startAutoPlay() {
+            autoPlayInterval = setInterval(nextSlide, 5000);
+        }
+        
+        function stopAutoPlay() {
+            clearInterval(autoPlayInterval);
+        }
+        
+        // Navigation buttons
+        document.getElementById('nextSlide').addEventListener('click', () => {
+            stopAutoPlay();
+            nextSlide();
+            startAutoPlay();
+        });
+        
+        document.getElementById('prevSlide').addEventListener('click', () => {
+            stopAutoPlay();
+            prevSlide();
+            startAutoPlay();
+        });
+        
+        // Indicator clicks
+        indicators.forEach((indicator, index) => {
+            indicator.addEventListener('click', () => {
+                stopAutoPlay();
+                showSlide(index);
+                startAutoPlay();
+            });
+        });
+        
+        // Pause on hover
+        const heroSection = document.querySelector('.hero-section');
+        heroSection.addEventListener('mouseenter', stopAutoPlay);
+        heroSection.addEventListener('mouseleave', startAutoPlay);
+        
+        // Start auto play
+        startAutoPlay();
+        
+        // Team modal functions
+        function openModal(memberId) {
+            const modal = document.getElementById('modal-' + memberId);
+            const backdrop = document.getElementById('modalBackdrop');
+            
+            if (modal && backdrop) {
+                backdrop.classList.add('show');
+                modal.classList.add('show');
+                document.body.style.overflow = 'hidden';
+            }
+        }
+        
+        function closeModal() {
+            const modals = document.querySelectorAll('.team-modal');
+            const backdrop = document.getElementById('modalBackdrop');
+            
+            modals.forEach(modal => modal.classList.remove('show'));
+            backdrop.classList.remove('show');
+            document.body.style.overflow = 'auto';
+        }
+        
+        // Close modal on escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeModal();
+            }
         });
     </script>
 </body>
