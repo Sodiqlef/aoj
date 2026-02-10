@@ -1,54 +1,81 @@
 // Gallery Data
 const galleryData = [
-    {
-        src: 'vid1.mp4',
-        type: 'video',
-        poster: 'vid1-poster.jpg', // Optional thumbnail for video
-        title: 'Event Highlights',
-        description: 'Events',
-        category: 'projects'
-    },
-    {
-        src: 'vid3.mp4',
-        type: 'video',
-        poster: 'vid2-poster.jpg',
-        title: 'Event Highlights',
-        description: 'Events',
-        category: 'facilities'
-    },
-    {
-        src: 'vid4.mp4',
-        type: 'video',
-        poster: 'vid4-poster.jpg',
-        title: 'Event Highlights',
-        description: 'Events',
-        category: 'events'
-    },
+    // {
+    //     src: 'vid1.mp4',
+    //     type: 'video',
+    //     poster: 'vid1-poster.jpg', // Optional thumbnail for video
+    //     title: 'Modern Office Design',
+    //     description: 'Corporate Project 2024',
+    //     category: 'projects'
+    // },
+    
     
     {
-        src: 'vid5.mp4',
-        type: 'video',
-        poster: 'vid5-poster.jpg',
-        title: 'Event Highlights',
-        description: 'Events',
+        src: 'img1.jpeg',
+        type: 'image',
+        title: 'Executives',
+        description: 'Our leadership team.',
         category: 'team'
     },
     {
-        src: 'vid6.mp4',
-        type: 'video',
-        poster: 'vid4-poster.jpg',
-        title: 'Event Highlights',
-        description: 'Events',
+        src: 'img2.jpeg',
+        type: 'image',
+        title: 'Executives',
+        description: 'Our leadership team.',
         category: 'team'
     },
     {
-        src: 'vid7.mp4',
-        type: 'video',
-        poster: 'vid7-poster.jpg',
-        title: 'Event Highlights',
-        description: 'Events',
+        src: 'img3.jpeg',
+        type: 'image',
+        title: 'Executives',
+        description: 'Our leadership team.',
         category: 'team'
     },
+    {
+        src: 'img4.jpeg',
+        type: 'image',
+        title: 'Executives',
+        description: 'Our leadership team.',
+        category: 'team'
+    },
+    {
+        src: 'img5.jpeg',
+        type: 'image',
+        title: 'Executives',
+        description: 'Our leadership team.',
+        category: 'team'
+    },
+    {
+        src: 'img6.jpeg',
+        type: 'image',
+        title: 'Executives',
+        description: 'Our leadership team.',
+        category: 'team'
+    },
+    {
+        src: 'img1.jpeg',
+        type: 'image',
+        title: 'Executives',
+        description: 'Our leadership team.',
+        category: 'team'
+    },
+    {
+        src: 'img1.jpeg',
+        type: 'image',
+        title: 'Executives',
+        description: 'Our leadership team.',
+        category: 'team'
+    },
+    {
+        src: 'img1.jpeg',
+        type: 'image',
+        title: 'Executives',
+        description: 'Our leadership team.',
+        category: 'team'
+    },
+
+    
+    
     
 ];
 
@@ -61,6 +88,7 @@ window.addEventListener('scroll', function() {
         navbar.classList.remove('scrolled');
     }
 });
+
 
 // Filter functionality
 const filterButtons = document.querySelectorAll('.filter-btn');
